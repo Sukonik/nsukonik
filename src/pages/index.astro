@@ -7,24 +7,29 @@ const featured = [...projects].sort((a, b) => a.name.localeCompare(b.name)).slic
 const posts = (await getCollection('writing')).filter((p) => !p.data.draft).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
 ---
 <Base title="Home">
-  <p class="eyebrow">Personal site · 2026 edition</p>
-  <h1>Nathan Sukonik</h1>
-  <p class="lede">Work, writing, and a time machine back to where it started. The company and products live at GoldenSunAI; this is the personal home and the archive.</p>
-  <p><a class="btn" href={`${base}/archive/`}>Enter the Time Machine</a> <a class="btn ghost" href={`${base}/work/`}>See the work</a></p>
+  <section class="hero">
+    <p class="eyebrow">Founder · Builder · Writer</p>
+    <h1>Nathan Sukonik</h1>
+    <p class="lede">Building at GoldenSunAI. This is my personal home: the work, the writing, and the story of where it all began.</p>
+    <p class="actions"><a class="btn" href={`${base}/work/`}>View my work</a> <a class="btn ghost" href={`${base}/writing/`}>Read the writing</a></p>
+  </section>
 
-  <h2>Featured work</h2>
+  <h2 class="section">Featured work</h2>
   <div class="grid">
     {featured.map((p) => (
-      <article class="card"><h3>{p.name}</h3><p class="status">{p.status}</p><p class="cat">{p.category}</p><p>{p.description}</p>
-        {p.liveUrl && <a href={p.liveUrl} rel="noopener">Visit live site</a>}</article>
+      <article class="card"><p class="cat">{p.category}</p><h3>{p.name}</h3><p>{p.description}</p>
+        <p class="foot"><span class="pill">{p.status}</span>{p.liveUrl && <a href={p.liveUrl} rel="noopener">Visit live site →</a>}</p></article>
     ))}
   </div>
 
-  <h2>Recent writing</h2>
+  <h2 class="section">Recent writing</h2>
   {posts.length === 0
-    ? <p class="note">New writing is coming. Meanwhile the original articles are being restored in the archive.</p>
+    ? <p class="note">New essays are on the way.</p>
     : <ul>{posts.map((p) => <li><a href={`${base}/writing/${p.id}/`}>{p.data.title}</a></li>)}</ul>}
 
-  <h2>Explore the original site</h2>
-  <p>The 2018 version of nsukonik.com is being restored page by page. Anything not yet recovered is marked as such.</p>
+  <a class="teaser" href={`${base}/archive/`}>
+    <span class="eyebrow">Time Travel</span>
+    <strong>Explore the original nsukonik.com</strong>
+    <span>Journey back through the early site, year by year. →</span>
+  </a>
 </Base>

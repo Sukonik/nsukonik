@@ -9,8 +9,8 @@ const sorted = [...projects].sort((a, b) => a.name.localeCompare(b.name));
   <p class="lede">Listed alphabetically. Statuses and links appear only once confirmed.</p>
   <div class="grid">
     {sorted.map((p) => (
-      <article class="card"><h3>{p.name}</h3><p class="status">{p.status}</p><p class="cat">{p.category}</p><p>{p.description}</p>
-        <p>
+      <article class="card"><p class="cat">{p.category}</p><h3>{p.name}</h3><p>{p.description}</p>
+        <p class="foot"><span class="pill">{p.status}</span>
           {p.liveUrl ? <a class="btn" href={p.liveUrl} rel="noopener">Live site</a> : <span class="cat">Live link pending</span>}
           {p.repoUrl && <> <a href={p.repoUrl} rel="noopener">Source</a></>}
         </p></article>
