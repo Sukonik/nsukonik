@@ -5,7 +5,7 @@
   --line: color-mix(in srgb, var(--accent) 22%, transparent);
   --text: #eef0f2;
   --muted: #a3acb5;
-  --rack-w: 15rem;
+  --rack-w: 17rem;
   --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
