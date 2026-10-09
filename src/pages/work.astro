@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { projects } from '../data/projects';
+const sorted = [...projects].sort((a, b) => a.name.localeCompare(b.name));
+---
+<Base title="Work" description="Projects and products, listed alphabetically.">
+  <p class="eyebrow">Work</p>
+  <h1>Projects</h1>
+  <p class="lede">Listed alphabetically. Statuses and links appear only once confirmed.</p>
+  <div class="grid">
+    {sorted.map((p) => (
+      <article class="card"><p class="cat">{p.category}</p><h3>{p.name}</h3><p>{p.description}</p>
+        <p class="foot"><span class="pill">{p.status}</span>
+          {p.liveUrl ? <a class="btn" href={p.liveUrl} rel="noopener">Live site</a> : <span class="cat">Live link pending</span>}
+          {p.repoUrl && <> <a href={p.repoUrl} rel="noopener">Source</a></>}
+        </p></article>
+    ))}
+  </div>
+</Base>

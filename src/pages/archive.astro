@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { archiveEntries, restorationQueue, statusLabel } from '../data/archive';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const now = new Date().getFullYear();
+const years = [...new Set([...archiveEntries.map((e) => e.year), now])].sort((a, b) => a - b);
+const entries = [...archiveEntries].sort((a, b) => a.year - b.year);
+---
+<Base title="Time Travel" description="Travel through the history of nsukonik.com by year.">
+  <p class="eyebrow">Time Travel</p>
+  <h1>Time Travel</h1>
+  <p class="lede">Slide between eras. Everything marked <span class="badge">Archived</span> is original material; it is never mixed with new writing.</p>
+
+  <section class="tm" aria-label="Year navigator">
+    <p class="tm-year" id="tm-year" aria-live="polite">{years[years.length - 1]}</p>
+    <label for="tm-range" class="cat">Year</label>
+    <input id="tm-range" type="range" min="0" max={years.length - 1} step="1" value={years.length - 1} aria-valuetext={String(years[years.length - 1])} />
+    <div class="tm-ticks" aria-hidden="true">{years.map((y) => <span>{y}</span>)}</div>
+
+    {years.map((y) => (
+      <div class="tm-panel" data-year={y} hidden={y !== years[years.length - 1]}>
+        {y === now
+          ? <p class="note">{y} is today: the new site. New writing is under <a href={`${base}/writing/`}>Writing</a>; restoration progress is below.</p>
+          : entries.filter((e) => e.year === y).map((e) => (
+              <article class="card"><span class="badge">Archived · {statusLabel[e.status]}</span><h3>{e.title}</h3>
+                {e.snapshotTimestamp && <p class="cat">Captured {e.snapshotTimestamp}</p>}
+                {e.note && <p>{e.note}</p>}
+                {e.waybackUrl && <p><a class="btn" href={e.waybackUrl} rel="noopener">Open the Wayback capture</a></p>}
+                {e.originalUrl && <p class="cat">Original address: {e.originalUrl}</p>}</article>))}
+      </div>
+    ))}
+  </section>
+
+  <noscript><ul class="timeline">{entries.map((e) => <li><h3>{e.year} · {e.title}</h3><p><a href={e.waybackUrl}>Wayback capture</a></p></li>)}</ul></noscript>
+
+  <h2>Restoration in progress</h2>
+  <div class="note">
+    <p>Original articles and images are being recovered from the Internet Archive and checked one by one. Anything not recovered will be marked <strong>missing</strong> or <strong>partial</strong>, never filled in.</p>
+  </div>
+  <h3>Sections queued for review <span class="cat">(unverified leads)</span></h3>
+  <ul class="tags">{restorationQueue.map((q) => <li>{q}</li>)}</ul>
+
+  <h2>The original mark</h2>
+  <p><img class="legacy-logo" src={`${base}/legacy/nsukonik-logo-1.png`} alt="Legacy nsukonik logo: illustrated head with red hair and glasses on a green background" width="120" height="120" /></p>
+  <p class="cat">Legacy logo, preserved as the reference. A redesign is a separate task.</p>
+
+  <script is:inline define:vars={{ years }}>
+    var r = document.getElementById('tm-range'), y = document.getElementById('tm-year');
+    function go() {
+      var v = years[+r.value]; y.textContent = v; r.setAttribute('aria-valuetext', String(v));
+      document.querySelectorAll('.tm-panel').forEach(function (p) { p.hidden = +p.dataset.year !== v; });
+    }
+    r.addEventListener('input', go);
+  </script>
+</Base>

@@ -1,0 +1,95 @@
+---
+import '../styles/themes.css';
+import '../styles/global.css';
+import { nav } from '../data/nav';
+import { themes, defaultTheme } from '../data/themes';
+
+interface Props { title: string; description?: string; }
+const { title, description = 'Nathan Sukonik — work, writing, and the original nsukonik.com restored.' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const href = (p: string) => `${base}/${p}`;
+const path = Astro.url.pathname;
+const isCurrent = (p: string) => path === href(p) || (p !== '' && path.startsWith(href(p)));
+const canonical = new URL(path, Astro.site);
+const fullTitle = path === href('') ? 'Nathan Sukonik' : `${title} · Nathan Sukonik`;
+---
+<!doctype html>
+<html lang="en" data-theme={defaultTheme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <script is:inline define:vars={{ defaultTheme }}>
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        document.documentElement.dataset.theme = t || defaultTheme;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href={href('')}>N<span>.</span> Sukonik</a>
+        <button class="rack-toggle" type="button" aria-expanded="false" aria-controls="rack">Menu</button>
+      </header>
+      <div class="rack-scrim" hidden></div>
+      <nav class="rack" id="rack" aria-label="Main" data-open="false">
+        <a class="brand" href={href('')}>N<span>.</span> Sukonik</a>
+        <div class="rack-head"><span>Rack 01</span>
+          <button class="rack-close rack-toggle" type="button" data-close>Close</button></div>
+        <ul>
+          {nav.map((n) => (
+            <li><a class="unit" href={href(n.href)} aria-current={isCurrent(n.href) ? 'page' : undefined}>
+              <span class="led" aria-hidden="true"></span>{n.label}<span class="u" aria-hidden="true">{n.unit}</span></a></li>
+          ))}
+        </ul>
+        <div class="themes">
+          <h2>Gem theme</h2>
+          <div class="swatches">
+            {themes.map((t) => (
+              <button class="swatch" type="button" data-theme-id={t.id} aria-pressed="false" aria-label={`${t.name} theme`}>
+                <i style={`background:${t.swatch}`}></i>{t.name}</button>
+            ))}
+          </div>
+        </div>
+      </nav>
+      <div>
+        <main id="main"><slot /></main>
+        <footer class="site">
+          <p>© {new Date().getFullYear()} Nathan Sukonik. Site code under MPL-2.0. Company and products live at GoldenSunAI.</p>
+        </footer>
+      </div>
+    </div>
+    <script>
+      const rack = document.getElementById('rack')!;
+      const scrim = document.querySelector<HTMLElement>('.rack-scrim')!;
+      const toggle = document.querySelector<HTMLButtonElement>('.topbar .rack-toggle')!;
+      const set = (open: boolean) => {
+        rack.dataset.open = String(open);
+        toggle.setAttribute('aria-expanded', String(open));
+        scrim.hidden = !open;
+        if (open) rack.querySelector<HTMLElement>('a.unit')?.focus(); else if (document.activeElement && rack.contains(document.activeElement)) toggle.focus();
+      };
+      toggle.addEventListener('click', () => set(rack.dataset.open !== 'true'));
+      scrim.addEventListener('click', () => set(false));
+      rack.querySelector('[data-close]')?.addEventListener('click', () => set(false));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && rack.dataset.open === 'true') set(false); });
+
+      const swatches = document.querySelectorAll<HTMLButtonElement>('.swatch');
+      const mark = () => swatches.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeId === document.documentElement.dataset.theme)));
+      swatches.forEach((b) => b.addEventListener('click', () => {
+        document.documentElement.dataset.theme = b.dataset.themeId!;
+        try { localStorage.setItem('theme', b.dataset.themeId!); } catch {}
+        mark();
+      }));
+      mark();
+    </script>
+  </body>
+</html>
