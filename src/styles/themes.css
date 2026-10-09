@@ -1,0 +1,9 @@
+/* Eight gemstone themes. Shared dark editorial base; each swaps accent + background tint. */
+:root, [data-theme='sunstone'] { --accent:#e8b04a; --accent-ink:#1a1306; --tint:#16130e; }
+[data-theme='ruby'] { --accent:#e0526a; --accent-ink:#1d060b; --tint:#170f12; }
+[data-theme='sapphire'] { --accent:#5b8def; --accent-ink:#06122b; --tint:#0e1420; }
+[data-theme='emerald'] { --accent:#3fbf86; --accent-ink:#04180f; --tint:#0e1713; }
+[data-theme='amethyst'] { --accent:#a779e9; --accent-ink:#150a26; --tint:#130f1c; }
+[data-theme='aquamarine'] { --accent:#4fd1c5; --accent-ink:#031a18; --tint:#0d1818; }
+[data-theme='garnet'] { --accent:#c2453b; --accent-ink:#1c0806; --tint:#171010; }
+[data-theme='obsidian'] { --accent:#b9c0c8; --accent-ink:#0e1114; --tint:#111214; }

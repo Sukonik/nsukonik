@@ -2,7 +2,7 @@
 
 **Personal website · Digital portfolio · Writing · Historical restoration**
 
-> **Project status:** Planning / historical inventory pending. This repository is the home of the new nsukonik.com, not yet a deployed application.
+> **Project status:** V1 site skeleton built (Astro). Historical inventory still pending. See docs/handoff-v1.md.
 
 - **Repository:** https://github.com/Sukonik/nsukonik
 - **Historical reference:** https://web.archive.org/web/20180413094759/http://nsukonik.com/
