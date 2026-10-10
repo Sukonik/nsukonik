@@ -9,8 +9,10 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 <Base title={post.data.title} description={post.data.summary}>
+  <section class="page-hero"><div class="container">
   <p class="eyebrow">Writing</p>
   <h1>{post.data.title}</h1>
-  <p class="cat"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}</time></p>
-  <Content />
+  <p class="meta"><time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}</time></p>
+  <div class="prose"><Content /></div>
+  </div></section>
 </Base>

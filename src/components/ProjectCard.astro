@@ -1,0 +1,13 @@
+---
+import { stageLabel, type Project } from '../data/projects';
+const { p } = Astro.props as { p: Project };
+---
+<article class="card" data-stage={p.stage}>
+  <div class="card-top"><h3>{p.icon} {p.name}</h3><span class="badge">{stageLabel[p.stage]}</span></div>
+  <p class="tag">{p.tagline}</p>
+  <p class="desc">{p.description}</p>
+  <p class="links">
+    {p.liveUrl && <a href={p.liveUrl} rel="noopener">Open live site →</a>}
+    <a class:list={[p.liveUrl ? 'sub' : '']} href={p.repoUrl} rel="noopener">{p.liveUrl ? 'Source' : 'View on GitHub →'}</a>
+  </p>
+</article>

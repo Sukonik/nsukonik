@@ -1,35 +1,63 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
-import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const featured = [...projects].sort((a, b) => a.name.localeCompare(b.name)).slice(0, 3);
-const posts = (await getCollection('writing')).filter((p) => !p.data.draft).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+const featured = projects.filter((p) => p.featured).sort((a, b) => a.name.localeCompare(b.name));
+const shipping = projects.filter((p) => p.liveUrl && ['goldensunai', 'windswordai', 'clearsky', 'uuub'].includes(p.slug));
 ---
 <Base title="Home">
   <section class="hero">
-    <p class="eyebrow">Founder · Builder · Writer</p>
-    <h1>Nathan Sukonik</h1>
-    <p class="lede">Building at GoldenSunAI. This is my personal home: the work, the writing, and the story of where it all began.</p>
-    <p class="actions"><a class="btn" href={`${base}/work/`}>View my work</a> <a class="btn ghost" href={`${base}/writing/`}>Read the writing</a></p>
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Founder · AI product builder</p>
+        <h1>Nathan Sukonik</h1>
+        <p class="tagline">I build focused software, with AI.</p>
+        <p class="lede">CEO of GoldenSunAI. I lead a small studio shipping practical products in legal technology, environmental data, personal computing and consumer brands, and I keep every one of them in the open.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={`${base}/work/`}>Explore my work →</a>
+          <a class="btn btn-secondary" href="https://sukonik.github.io/goldensunai/" rel="noopener">Visit GoldenSunAI →</a>
+        </div>
+      </div>
+      <aside class="panel" aria-labelledby="live-h">
+        <h2 id="live-h">Live right now</h2>
+        <ul class="live-list">
+          {shipping.map((p) => (
+            <li><a href={p.liveUrl} rel="noopener"><span class="pulse" aria-hidden="true"></span><span><b>{p.name}</b><small>{p.tagline}</small></span><span class="go" aria-hidden="true">↗</span></a></li>
+          ))}
+        </ul>
+      </aside>
+    </div>
   </section>
 
-  <h2 class="section">Featured work</h2>
-  <div class="grid">
-    {featured.map((p) => (
-      <article class="card"><p class="cat">{p.category}</p><h3>{p.name}</h3><p>{p.description}</p>
-        <p class="foot"><span class="pill">{p.status}</span>{p.liveUrl && <a href={p.liveUrl} rel="noopener">Visit live site →</a>}</p></article>
-    ))}
-  </div>
+  <section class="section">
+    <div class="container">
+      <div class="head-row">
+        <div class="page-head"><p class="eyebrow">Selected work</p><h2>A portfolio, not a pitch deck.</h2>
+          <p>Everything here is public: a live site, a demo, or source you can read.</p></div>
+        <a class="link-arrow" href={`${base}/work/`}>All projects →</a>
+      </div>
+      <div class="card-grid">{featured.map((p) => <ProjectCard p={p} />)}</div>
+    </div>
+  </section>
 
-  <h2 class="section">Recent writing</h2>
-  {posts.length === 0
-    ? <p class="note">New essays are on the way.</p>
-    : <ul>{posts.map((p) => <li><a href={`${base}/writing/${p.id}/`}>{p.data.title}</a></li>)}</ul>}
+  <section class="section">
+    <div class="container">
+      <div class="page-head"><p class="eyebrow">How I work</p><h2>Human direction. AI leverage.</h2></div>
+      <div class="cols3">
+        <div class="step"><b>01</b><h3>Product first</h3><p>Start from a real problem, keep the first version small, and make the live link the proof.</p></div>
+        <div class="step"><b>02</b><h3>Built with AI</h3><p>Specialized AI collaborators handle research, design and engineering while I set direction and make the calls.</p></div>
+        <div class="step"><b>03</b><h3>Open by default</h3><p>Public code, honest status labels, and demos that say plainly when they use synthetic data.</p></div>
+      </div>
+    </div>
+  </section>
 
-  <a class="teaser" href={`${base}/archive/`}>
-    <span class="eyebrow">Time Travel</span>
-    <strong>Explore the original nsukonik.com</strong>
-    <span>Journey back through the early site, year by year. →</span>
-  </a>
+  <section class="section">
+    <div class="container">
+      <a class="band" href={`${base}/archive/`}>
+        <div><p class="eyebrow">Time Travel</p><h2>Where it started.</h2><p>The original nsukonik.com is being restored from the web archive, one era at a time.</p></div>
+        <span class="btn btn-secondary">Enter the archive →</span>
+      </a>
+    </div>
+  </section>
 </Base>

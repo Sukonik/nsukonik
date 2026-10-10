@@ -4,12 +4,13 @@ import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const posts = (await getCollection('writing')).filter((p) => !p.data.draft).sort((a, b) => +b.data.date - +a.data.date);
 ---
-<Base title="Writing" description="New essays and articles.">
-  <p class="eyebrow">Writing · 2026 and later</p>
-  <h1>Writing</h1>
-  <p class="lede">New essays live here. Original articles from the early site are kept separate in the <a href={`${base}/archive/`}>Time Machine</a>.</p>
-  {posts.length === 0
-    ? <p class="note">Nothing published yet.</p>
-    : <ul class="timeline">{posts.map((p) => <li><h3><a href={`${base}/writing/${p.id}/`}>{p.data.title}</a></h3>
-        <p class="cat"><time datetime={p.data.date.toISOString()}>{p.data.date.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}</time></p><p>{p.data.summary}</p></li>)}</ul>}
+<Base title="Writing" description="New essays and articles by Nathan Sukonik.">
+  <section class="page-hero"><div class="container">
+    <div class="page-head"><p class="eyebrow">Writing</p><h1>Writing</h1>
+      <p>New essays live here. Articles from the original site are kept separate in <a class="link-arrow" href={`${base}/archive/`}>Time Travel</a>.</p></div>
+    {posts.length === 0
+      ? <p class="empty">The first essay is on its way.</p>
+      : <ul class="timeline">{posts.map((p) => <li><h3><a href={`${base}/writing/${p.id}/`}>{p.data.title}</a></h3>
+          <p class="meta"><time datetime={p.data.date.toISOString()}>{p.data.date.toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' })}</time></p><p class="prose">{p.data.summary}</p></li>)}</ul>}
+  </div></section>
 </Base>

@@ -2,8 +2,17 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="About">
-  <p class="eyebrow">About</p>
-  <h1>About Nathan</h1>
-  <p class="note">Placeholder: the current bio is pending Nathan's review. No legacy photos are used as a current portrait.</p>
-  <p>Nathan Sukonik is the founder behind GoldenSunAI. This site is his personal home, his writing, and the restored history of the original nsukonik.com.</p>
+  <section class="page-hero"><div class="container">
+    <div class="page-head"><p class="eyebrow">About</p><h1>Nathan Sukonik</h1></div>
+    <div class="prose">
+      <p>I'm the CEO of GoldenSunAI, an AI-native product studio. I set product direction, write code, and make the final decisions, working alongside a team of specialized AI collaborators.</p>
+      <p>This site is my personal home: selected work, new writing, and a restored look at the original nsukonik.com.</p>
+    </div>
+    <div class="facts">
+      <div class="panel"><b>Role</b><p>CEO, GoldenSunAI. AI product engineering, web development, product direction and strategy.</p></div>
+      <div class="panel"><b>Studio</b><p>Team GoldenSun: focused software across AI, legal tech, environmental data and personal computing.</p></div>
+      <div class="panel"><b>Approach</b><p>Small first versions, public code, honest status labels.</p></div>
+    </div>
+    <div class="actions"><a class="btn btn-primary" href="https://sukonik.github.io/goldensunai/" rel="noopener">Meet GoldenSunAI →</a></div>
+  </div></section>
 </Base>

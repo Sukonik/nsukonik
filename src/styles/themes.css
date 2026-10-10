@@ -1,9 +1,9 @@
-/* Eight gemstone themes. Shared dark editorial base; each swaps accent + background tint. */
-:root, [data-theme='sunstone'] { --accent:#e8b04a; --accent-ink:#1a1306; --tint:#16130e; }
-[data-theme='ruby'] { --accent:#e0526a; --accent-ink:#1d060b; --tint:#170f12; }
-[data-theme='sapphire'] { --accent:#5b8def; --accent-ink:#06122b; --tint:#0e1420; }
-[data-theme='emerald'] { --accent:#3fbf86; --accent-ink:#04180f; --tint:#0e1713; }
-[data-theme='amethyst'] { --accent:#a779e9; --accent-ink:#150a26; --tint:#130f1c; }
-[data-theme='aquamarine'] { --accent:#4fd1c5; --accent-ink:#031a18; --tint:#0d1818; }
-[data-theme='garnet'] { --accent:#c2453b; --accent-ink:#1c0806; --tint:#171010; }
-[data-theme='obsidian'] { --accent:#b9c0c8; --accent-ink:#0e1114; --tint:#111214; }
+/* Eight gemstone themes. Black base in every theme; only the accent pair changes. */
+:root, [data-theme='sunstone'] { --accent: #d4a017; --accent-strong: #e8b74b; }
+[data-theme='ruby'] { --accent: #c83f52; --accent-strong: #f05a6b; }
+[data-theme='sapphire'] { --accent: #3a5cff; --accent-strong: #6b84ff; }
+[data-theme='emerald'] { --accent: #1f9d68; --accent-strong: #4ac58c; }
+[data-theme='amethyst'] { --accent: #8f55d6; --accent-strong: #b278f1; }
+[data-theme='aquamarine'] { --accent: #1fa7a0; --accent-strong: #4fd1c5; }
+[data-theme='garnet'] { --accent: #a8362c; --accent-strong: #d9584b; }
+[data-theme='obsidian'] { --accent: #8e969f; --accent-strong: #c4cad1; }
