@@ -2,7 +2,18 @@
 
 **Personal website · Digital portfolio · Writing · Historical restoration**
 
-> **Project status:** V1 site skeleton built (Astro). Historical inventory still pending. See docs/handoff-v1.md.
+### 🌐 [Open the live site](https://sukonik.github.io/nsukonik/)
+
+| Page | Link |
+| --- | --- |
+| 🏠 Home | [sukonik.github.io/nsukonik](https://sukonik.github.io/nsukonik/) |
+| 💼 Work | [/work/](https://sukonik.github.io/nsukonik/work/) |
+| ✍️ Writing | [/writing/](https://sukonik.github.io/nsukonik/writing/) |
+| ⏳ Time Travel | [/archive/](https://sukonik.github.io/nsukonik/archive/) |
+| 👤 About | [/about/](https://sukonik.github.io/nsukonik/about/) |
+| ✉️ Contact | [/contact/](https://sukonik.github.io/nsukonik/contact/) |
+
+> **Project status:** V1 is live (Astro, deployed with GitHub Pages). Historical archive restoration is still in progress. See docs/handoff-v1.md.
 
 - **Repository:** https://github.com/Sukonik/nsukonik
 - **Historical reference:** https://web.archive.org/web/20180413094759/http://nsukonik.com/
