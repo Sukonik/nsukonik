@@ -1,19 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/projects';
 const sorted = [...projects].sort((a, b) => a.name.localeCompare(b.name));
+const filters = [['all', 'All'], ['live', 'Live & demos'], ['build', 'In progress']];
 ---
-<Base title="Work" description="Projects and products, listed alphabetically.">
-  <p class="eyebrow">Work</p>
-  <h1>Projects</h1>
-  <p class="lede">Listed alphabetically. Statuses and links appear only once confirmed.</p>
-  <div class="grid">
-    {sorted.map((p) => (
-      <article class="card"><p class="cat">{p.category}</p><h3>{p.name}</h3><p>{p.description}</p>
-        <p class="foot"><span class="pill">{p.status}</span>
-          {p.liveUrl ? <a class="btn" href={p.liveUrl} rel="noopener">Live site</a> : <span class="cat">Live link pending</span>}
-          {p.repoUrl && <> <a href={p.repoUrl} rel="noopener">Source</a></>}
-        </p></article>
-    ))}
-  </div>
+<Base title="Work" description="Projects and products by Nathan Sukonik and Team GoldenSun.">
+  <section class="page-hero"><div class="container">
+    <div class="page-head"><p class="eyebrow">Work</p><h1>Projects</h1>
+      <p>{sorted.length} public projects, listed alphabetically. Status labels say exactly where each one stands.</p></div>
+    <div class="filter" role="group" aria-label="Filter projects">
+      {filters.map(([k, l], i) => <button class="chip" type="button" data-f={k} aria-pressed={i === 0 ? 'true' : 'false'}>{l}</button>)}
+    </div>
+    <div class="card-grid" id="grid">{sorted.map((p) => <ProjectCard p={p} />)}</div>
+  </div></section>
+  <script is:inline>
+    var live = ['live', 'demo', 'beta'];
+    document.querySelectorAll('.chip').forEach(function (c) {
+      c.addEventListener('click', function () {
+        document.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
+        var f = c.dataset.f;
+        document.querySelectorAll('#grid .card').forEach(function (card) {
+          var l = live.indexOf(card.dataset.stage) > -1;
+          card.hidden = f === 'live' ? !l : f === 'build' ? l : false;
+        });
+      });
+    });
+  </script>
 </Base>
